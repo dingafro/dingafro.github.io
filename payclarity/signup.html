@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PayClarity Sign Up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#0b1220;
+      color:white;
+      margin:0;
+      padding:40px 20px;
+    }
+    .box{
+      max-width:420px;
+      margin:40px auto;
+      background:#111a2e;
+      padding:30px 20px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    h2{margin-top:0}
+    input,button{
+      width:100%;
+      box-sizing:border-box;
+      margin:10px 0;
+      padding:14px;
+      border-radius:10px;
+      border:none;
+      font-size:16px;
+    }
+    input{
+      background:#1a2742;
+      color:white;
+    }
+    button{
+      background:#f97316;
+      color:white;
+      font-weight:700;
+    }
+    p{
+      color:#b9c6de;
+      font-size:14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Create PayClarity Account</h2>
+    <input id="username" placeholder="Username">
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="signup()">Create Account</button>
+    <p id="msg"></p>
+  </div>
+
+  <script>
+    const API = "https://YOUR-BACKEND-URL";
+
+    async function signup() {
+      const res = await fetch(API + "/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: document.getElementById("username").value,
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value
+        })
+      });
+
+      const data = await res.json();
+      document.getElementById("msg").innerText =
+        data.detail || data.message || JSON.stringify(data);
+    }
+  </script>
+</body>
+</html>
